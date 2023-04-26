@@ -3,7 +3,7 @@
 ## Available Scripts
 
 To clone project, you can run:
-### `git clone `
+### `git clone https://github.com/ChatNghe/assignment.git`
 
 In the project directory, you can run:
 ### `npm install`
