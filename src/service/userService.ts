@@ -1,9 +1,9 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-export const randomUser = createAsyncThunk(
+export const randomUser: any = createAsyncThunk(
     'user/getRandomUser',
-    async (data: any) => {
-        const res: any = await axios.post('https://randomuser.me/api/', data)
+    async () => {
+        const res: any = await axios.get('https://randomuser.me/api/?results=200')
         return res.data;
     }
 )

@@ -6,7 +6,7 @@ import RandomUser from "./pages/user/randomUser";
 function App() {
     return (
         <Routes>
-            <Route path={"user"} element={<RandomUser/>}/>
+            <Route path={"users"} element={<RandomUser/>}/>
         </Routes>
     );
 }
