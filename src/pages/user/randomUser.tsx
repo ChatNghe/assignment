@@ -6,24 +6,17 @@ import { randomUser } from "../../service/userService";
 export default function RandomUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
-  const [queryValue, setQueryValue] = useState({
-    page: 1,
-    sort: "",
-  });
   const users = useSelector((state: any) => {
     if (state !== undefined) {
       return state.users.users.results;
     }
   });
+  const [queryValue, setQueryValue] = useState({
+    page: 1,
+    sort: "",
+  });
   const [sortUsers, setSortUsers] = useState(users);
-  const handleClick = async (e: any) => {
-    setPage(+e.target.title);
-    setQueryValue({
-      page: +e.target.title,
-      sort: queryValue.sort,
-    });
-  };
+
   const handleSort = async (value: string) => {
     setQueryValue({
       page: queryValue.page,
@@ -45,6 +38,13 @@ export default function RandomUser() {
         )
       );
     }
+  };
+
+  const handleClick = async (e: any) => {
+    setQueryValue({
+      page: +e.target.title,
+      sort: queryValue.sort,
+    });
   };
 
   const paginationUser = [];
@@ -77,7 +77,7 @@ export default function RandomUser() {
           className={"select"}
           name="sort"
           onChange={(e) => {
-            handleSort(e.target.value);
+            handleSort(e.target.value).then();
           }}
         >
           <option value={""}></option>
@@ -86,26 +86,26 @@ export default function RandomUser() {
         </select>
       </div>
       <div className={"body"}>
-        <table id={"users"}>
+        <table className={'table'} id={"users"}>
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Full name</th>
-              <th scope="col">Username</th>
-              <th scope="col">Thumbnail icon</th>
+              <th className={'index'} scope="col">#</th>
+              <th className={'fullName'} scope="col">Full name</th>
+              <th className={'username'} scope="col">Username</th>
+              <th className={'thumbnail'} scope="col">Thumbnail icon</th>
             </tr>
           </thead>
           <tbody>
-            {paginationUser[page - 1] !== undefined &&
-              paginationUser[page - 1].map((item, key) => (
+            {paginationUser[queryValue.page - 1] !== undefined &&
+              paginationUser[queryValue.page - 1].map((item, key) => (
                 <>
                   <tr>
-                    <td scope="row">{(page - 1) * 10 + key + 1}</td>
-                    <td>
+                    <td className={'index'} scope="row">{(queryValue.page - 1) * 10 + key + 1}</td>
+                    <td className={'fullName'}>
                       {item.name.title}. {item.name.first} {item.name.last}
                     </td>
-                    <td>{item.login.username}</td>
-                    <td style={{ textAlign: "center" }}>
+                    <td className={'username'}>{item.login.username}</td>
+                    <td className={'thumbnail'}>
                       <img src={`${item.picture.thumbnail}`} />
                     </td>
                   </tr>
@@ -115,24 +115,23 @@ export default function RandomUser() {
         </table>
       </div>
 
-      <div className={"pagination"}>
-        <nav aria-label="Page navigation example">
-          <ul className="pagination">
-            {paginationUser.map((item, key) => (
-              <>
-                <li className="page-item">
-                  <a
-                    className="page-link"
-                    title={`${key + 1}`}
-                    onClick={handleClick}
-                  >
-                    {key + 1}
-                  </a>
-                </li>
-              </>
-            ))}
-          </ul>
-        </nav>
+      <div>
+        <ul className="pager">
+          {paginationUser.map((item, key) => (
+            <>
+              <li className="pager__item">
+                <a
+                  className="pager__link"
+                  title={`${key + 1}`}
+                  onClick={handleClick}
+                  href="#"
+                >
+                  {key + 1}
+                </a>
+              </li>
+            </>
+          ))}
+        </ul>
       </div>
     </>
   );

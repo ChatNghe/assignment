@@ -3,7 +3,7 @@ import axios from "axios";
 export const randomUser: any = createAsyncThunk(
   "user/getRandomUser",
   async () => {
-    const res: any = await axios.get("https://randomuser.me/api/?results=200");
+    const res: any = await axios.get("https://randomuser.me/api/?results=150");
     return res.data;
   }
 );
